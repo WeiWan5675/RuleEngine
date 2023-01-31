@@ -1,0 +1,34 @@
+package rules.engine.set.abc
+import com.alibaba.fastjson.JSONObject
+import org.apache.commons.lang3.StringUtils
+
+function void func_test(JSONObject obj) {
+    String text = obj.getString("text");
+    if(StringUtils.isNotBlank(text)){
+        obj.put("func_test", true);
+    }
+}
+rule "r_text_exist_2"
+when
+    $fact:JSONObject()
+    $func_test: Boolean() from func_test($fact)
+then
+    $fact.put("textExist_2",1);
+    System.out.println("触发了r_text_exist_2存在检测规则, 添加存在检测标识");
+end
+
+rule "func_test"
+when
+    $fact:JSONObject(getString("text") != null)
+then
+    func_test($fact);
+    System.out.println("触发了func_test存在检测规则, 添加存在检测标识");
+end
+
+
+
+function boolean test_cond(JSONObject obj) {
+    if(StringUtils.isNotBlank(obj.get("text"))){
+        return true;
+    }
+}

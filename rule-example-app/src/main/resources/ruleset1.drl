@@ -1,0 +1,28 @@
+package rules.engine.set.ruleset1
+import com.alibaba.fastjson.JSONObject
+
+rule "r_text_exist_1"
+when
+    $fact:JSONObject(getString("text") != null)
+then
+    $fact.put("textExist",1);
+    System.out.println("触发了text存在检测规则, 添加存在检测标识");
+end
+
+
+rule "r_text_exist_3"
+when
+    $fact:JSONObject(getString("text") != null && getString("text").equals("aaaaaaaa"))
+then
+    $fact.put("text_aaa_ok", 1);
+    System.out.println("触发了text = aaaaa 规则, 添加存在检测标识");
+end
+
+
+rule "r_text_not_in_1"
+when
+    $fact:JSONObject(getString("not in") == null)
+then
+    $fact.put("text_not_in", 1);
+    System.out.println("触发了 text_not_in 规则, 添加存在检测标识");
+end
