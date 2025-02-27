@@ -21,6 +21,8 @@ public class RuleEngineFactory {
                 return new DroolsRuleEngine();
             case GROOVY:
                 return new GroovyRuleEngine();
+            case EASY_RULE:
+//                return new EasyRuleEngine();
             default:
                 throw new IllegalStateException("未知的规则引擎类型, 无法创建.");
         }

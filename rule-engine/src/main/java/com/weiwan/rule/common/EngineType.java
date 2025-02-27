@@ -8,5 +8,5 @@ package com.weiwan.rule.common;
  * @Description: 规则引擎类型
  **/
 public enum EngineType {
-    DROOLS, GROOVY
+    DROOLS, GROOVY, EASY_RULE
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.weiwan.rule.pojo.Rule;
 import com.weiwan.rule.pojo.RuleSet;
 import com.weiwan.rule.storage.RuleStorage;
+import org.apache.commons.lang3.StringUtils;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -128,6 +129,20 @@ public class DroolsRuleEngine extends AbstractRuleEngine {
     public void exec(JSONObject obj) {
         for (String key : kieContainerMap.keySet()) {
             KieContainer kieContainer = kieContainerMap.get(key);
+            KieSession kieSession = kieContainer.newKieSession();
+            //事实对象存入kie内存区域
+            kieSession.insert(obj);
+            //执行所有规则
+            kieSession.fireAllRules();
+            //销毁kieSession
+            kieSession.dispose();
+        }
+    }
+
+    @Override
+    public void execute(String topic, JSONObject obj) {
+        if(StringUtils.isNotBlank(topic)){
+            KieContainer kieContainer = kieContainerMap.get(topic);
             KieSession kieSession = kieContainer.newKieSession();
             //事实对象存入kie内存区域
             kieSession.insert(obj);

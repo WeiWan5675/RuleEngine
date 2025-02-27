@@ -36,4 +36,9 @@ public class GroovyRuleEngine extends AbstractRuleEngine {
 //        Map<String, RuleSet> ruleSet = ruleStorage.getRuleSet();
         //value就是redis的map中所有的值
     }
+
+    @Override
+    public void execute(String topic, JSONObject obj) {
+
+    }
 }

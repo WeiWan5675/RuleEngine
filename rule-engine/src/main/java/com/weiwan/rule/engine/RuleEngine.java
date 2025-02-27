@@ -21,4 +21,6 @@ public interface RuleEngine {
 
     void execute(JSONObject obj);
 
+    void execute(String topic, JSONObject obj);
+
 }
